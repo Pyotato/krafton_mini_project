@@ -10,7 +10,8 @@ import json
 import hashlib
 from jwt import ExpiredSignatureError,DecodeError
 from find_my_location import geocoding_reverse,geocoding
-
+# from localStoragePy import localStoragePy
+import localstorage
 load_dotenv()
 my_secret_key = os.getenv("SECRET_KEY")
 app = Flask(__name__)
@@ -22,6 +23,9 @@ client = MongoClient('localhost', 27017)
 db = client.mini_project  
 users_collection = db['pick_menu_user']
 metro_category_coll = db.list_collection_names()
+mylocation ={}
+# scope_large =""
+# scope_medium =""
 
 
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
@@ -30,11 +34,25 @@ jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 data =[]
 records =[]
+total_data=[]
+
+# geopy
+@app.route("/api/location/user", methods=['POST'])
+def locate_user():
+    x_y = request.json["curr_location"]
+    mylocation = geocoding_reverse(x_y)
+    print(mylocation["address_si"])
+    return mylocation
+
 ##########################################################
 # pages
 @app.route('/')
 def home():
-     return render_template('index.html') # 아래 코드에 에러 남..
+    # print(mylocation)
+    #  mylocation =localStoragePy.getItem("my_location")
+    # mylocation=localstorage.
+    # print(mylocation)
+    return render_template('index.html') # 아래 코드에 에러 남..
     # token_receive = request.cookies.get('token')
     # try:
     #     payload = jwt.decode(token_receive, my_secret_key, algorithms=['HS256'])
@@ -74,14 +92,21 @@ def error_page(error):
 
 @app.route('/restaurant/list')
 def restaurant_list_page():
-  
-    for items in metro_category_coll:
-        
-       data.append(db[items].find_one())
-    for i in data:
-        if i.get("restaurant_name") is not None:
-            records.append(i)
+    
+    print("address_si",mylocation.get("address_si"))
+    if mylocation.get("address_si") is None:
 
+        for items in metro_category_coll:
+            
+            data.extend(list(db[items].find()))
+        for i in data:
+             if i.get("restaurant_name") is not None:
+                 records.append(i)
+    else:
+        data.append(list(db[mylocation.get("address_si")].find()))
+        for i in data:
+            if i.get("restaurant_name") is not None:
+                records.append(i)
     try:
             
         return redirect(restaurant_detail_page("restaurant_detail_page",location_cat=data.get("location_category"),location_specific=data.get("location_specific"),restaurant_name=data.get("restaurant_name")))
@@ -94,7 +119,7 @@ def restaurant_list_page():
 
 @app.route('/restaurant/detail/<string:location_cat>/<string:location_specific>/<string:restaurant_name>')
 def restaurant_detail_page(location_cat,location_specific,restaurant_name):
-
+    
     item = db[location_cat].find_one({"location_category":location_cat,"location_catagory_narrowed":location_specific,"restaurant_name":restaurant_name})
     
     return render_template('restaurantdetailPage.html',location_cat=location_cat,location_specific=location_specific,restaurant_name=restaurant_name,details=item)
@@ -191,13 +216,6 @@ def get_restaurant_detail():
 
 
 #################################################################################
-# geopy
-@app.route("/api/location/user", methods=['POST'])
-def locate_user():
-    x_y = request.json["curr_location"]
-    mylocation = geocoding_reverse(x_y)
-    print(mylocation)
-    return mylocation
 
 # print("kakao_secret_key",kakao_secret_key)
 if __name__ == '__main__':

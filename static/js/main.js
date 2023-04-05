@@ -18,11 +18,11 @@ var pwdReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#%&?])[A-Za-z\d@$!%*#?&]{8,16}$/g;
 //현재 사용자 위치 찾기 > 자세한 내용은 geolocation.api mozilla.docs 확인!
 function geoFindMe() {
   const status = $("#status");
-  const mapLink = $("#map-link");
+  // const mapLink = $("#map-link");
   let my_location = $("#current_location_input");
 
-  mapLink.href = "";
-  mapLink.textContent = "";
+  // mapLink.href = "";
+  // mapLink.textContent = "";
 
   function success(position) {
     const latitude = position.coords.latitude;
@@ -35,6 +35,10 @@ function geoFindMe() {
       data: JSON.stringify({ curr_location: `${latitude},${longitude}` }),
       success: function (response) {
         my_location.val(response);
+        console.log(response);
+        localStorage.setItem("my_location", JSON.stringify(response));
+        // address_si address_dong
+        // location_cat location_specific
         if (response["msg"] == "foreign user_agent") {
           alert("대한민국으로 위치를 설정해주세요.");
         }
@@ -53,8 +57,6 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 }
-
-$(document).ready(geoFindMe());
 
 function submit_signup_form() {
   let user_pwd_input = $("#user_pwd_input").val();
@@ -123,3 +125,4 @@ function submit_login_form() {
     },
   });
 }
+$(document).ready(geoFindMe());
