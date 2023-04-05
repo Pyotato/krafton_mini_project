@@ -4,67 +4,102 @@
   padding: 0;
   font-family: "Gamja Flower", cursive;
 }
-/* .logo_large {
+.logo_large {
   width: 3em;
-  height: 9em; */
-/* } */
+  /* height: 9em; */
+}
 nav.main_theme_clr {
   background-color: #fff7f7;
 }
-a.main_btn_theme_clr {
-  background-color: #bb7d3c;
-  color: #ede6da;
-  text-decoration: none;
-}
-a.main_btn_theme_clr:hover {
-  color: #bb7d3c;
-
-  background-color: #ede6da;
-}
 section > img.modal_img {
   width: 100vw;
+  /* width: 100%; */
+  /* height: 100vh; */
   opacity: 80%;
 }
 section.modal_bg {
   overflow: hidden;
+  width: 100vw;
   height: 100vh;
 }
 section.modal_base {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #ede6da;
-  border-radius: 1rem;
-  opacity: 80%;
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translate(-50%, -40%);
+
   z-index: 100;
 }
 .flex_wrap {
   width: 100vw;
   height: 100vh;
   display: inline-flex;
-  justify-content: center;
 }
 
 .flex_centre {
   align-items: center;
 }
-.padding_large {
-  padding: 3em;
-}
-input.main_input_theme {
-  background-color: #bb7d3c;
-  color: #ede6da;
-}
-.flex_item {
-  display: inline-flex;
-  align-items: center;
-}
-.modal_form {
-  width: 50vw;
 
-  height: 50vh;
+.left_col {
+  width: 100%;
 }
-.card_wrap {
-  width: 30em;
+.right_col {
+  width: 100%;
+  background-color: green;
+}
+.modal_base {
+  width: 40%;
+  height: 50%;
+  background-color: #fff7f7;
+  display: table;
+}
+.login_form {
+  display: table-cell;
+  vertical-align: middle;
+}
+.text_field {
+  width: 45%;
+  height: 5px;
+  background-color: #bb7d3c;
+  margin-bottom: 45px;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+}
+.gps_field {
+  width: 60%;
+  height: 15px;
+  background-color: #bb7d3c;
+  margin-bottom: 45px;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+}
+.submit_btn {
+  font-size: 28px;
+  background-color: #5d3e1e;
+  color: white;
+  margin-bottom: 30px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 30px;
+  width: 300px;
+}
+
+.links {
+  text-align: right;
+  margin-bottom: -100px;
+  margin-right: 40px;
+}
+.links a {
+  font-size: 30px;
+  color: #bb7d3c;
+}
+
+.form {
+  text-align: center;
 }

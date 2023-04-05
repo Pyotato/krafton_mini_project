@@ -37,12 +37,12 @@ def home():
         payload = jwt.decode(token_receive, my_secret_key, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         return render_template('index.html', user_info=user_info)
-    except :
-         return redirect(url_for("login"))
-    # except jwt.ExpiredSignatureError:
-    #     return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    # except jwt.exceptions.DecodeError:
-    #     return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+    # except :
+    #      return redirect(url_for("login"))
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
     
 
 @app.route('/register')
@@ -132,16 +132,6 @@ def login_user():
         # return jsonify(result="success", access_token=create_access_token(identity=user_id, expires_delta=datetime.timedelta(hours=1)))
     else:
         return jsonify({'result': 'fail', 'msg': 'incorrect pwd'})
-
-
-# @app.route("/api/mypage", methods=["GET"])
-# @jwt_required()
-# def user_only():
-#     current_user = get_jwt_identity()
-#     if current_user is None:
-#         return "User Only"
-#     else:
-#         return jsonify(current_user=current_user)
 
 
 @app.route("/api/logout", methods=["POST"])
