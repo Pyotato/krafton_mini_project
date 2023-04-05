@@ -4,45 +4,67 @@
   padding: 0;
   font-family: "Gamja Flower", cursive;
 }
-.logo_large {
+/* .logo_large {
   width: 3em;
-  /* height: 9em; */
-}
+  height: 9em; */
+/* } */
 nav.main_theme_clr {
   background-color: #fff7f7;
 }
+a.main_btn_theme_clr {
+  background-color: #bb7d3c;
+  color: #ede6da;
+  text-decoration: none;
+}
+a.main_btn_theme_clr:hover {
+  color: #bb7d3c;
+
+  background-color: #ede6da;
+}
 section > img.modal_img {
   width: 100vw;
-  /* width: 100%; */
-  /* height: 100vh; */
   opacity: 80%;
 }
 section.modal_bg {
   overflow: hidden;
-  width: 100vw;
   height: 100vh;
 }
 section.modal_base {
   position: absolute;
   top: 50%;
-  background-color: white;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ede6da;
   border-radius: 1rem;
+  opacity: 80%;
   z-index: 100;
 }
 .flex_wrap {
   width: 100vw;
   height: 100vh;
   display: inline-flex;
+  justify-content: center;
 }
 
 .flex_centre {
   align-items: center;
 }
-
-.left_col {
-  width: 100%;
+.padding_large {
+  padding: 3em;
 }
-.right_col {
-  width: 100%;
-  background-color: green;
+input.main_input_theme {
+  background-color: #bb7d3c;
+  color: #ede6da;
+}
+.flex_item {
+  display: inline-flex;
+  align-items: center;
+}
+.modal_form {
+  width: 50vw;
+
+  height: 50vh;
+}
+.card_wrap {
+  width: 30em;
 }
