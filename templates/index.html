@@ -101,20 +101,16 @@
       />
     </section>
     <section class="modal_base">
-      <div class="login_form">
+      <div class="main_form">
+        <h1 class="title is-1">잡솨봐</h1>
         <form class="form">
-
-           <span style="color:#BB7D3C; font-size: 30px;">현재위치 :</span> <input type="text" class="gps_field"></br>
-           <span style="color:#BB7D3C; font-size: 17px;">아이디 </span>    <input type="text" class="text_field"> </br>
-           <span style="color:#BB7D3C; font-size: 17px;">패스워드 </span>   <input type="text" class="text_field"> </br>
-
-          <input type="submit" value="비회원으로 시작하기" class="submit_btn">
-          <input type="submit" value="로그인하기" class="submit_btn">
+          <span style="color:#BB7D3C; font-size: 30px;">현재위치 :</span> <input type="text" class="gps_field"></br>
+          <input type="button" value="비회원으로 시작하기" id="submit_btn" class="Non_account">
+          <input type="button" onclick="window.location.href='/login'" value="로그인하기" id="submit_btn" class="account">
         </form>
         <div class="links">
-          <a href="#"> 회원가입 하러가기 ></a>
+          <a href="/register"> 회원가입 하러가기 ></a>
         </div>
-
       </div>
     </section>
     <!--공통:footer-->
