@@ -55,10 +55,20 @@
   </head>
   <body>
     <div class="flex_wrap flex_centre">
-      <div class="left_col p-5">
+      <div class="left_col p-5 mx-5">
         <img src="{{ url_for('static', filename='imgs/no_page_icon.png') }}" />
       </div>
-      <div class="right_col p-5"></div>
+      <div class="right_col p-5 mr-5 mb-6">
+        <div class="is-size-2 mb-3">서비스 이용에 불편을 드려 죄송합니다.</div>
+        <div class="is-size-4 mb-6">
+          요청한 웹페이지의 이름이 바뀌었거나 현재 사용할 수 없거나
+          삭제되었습니다. 입력하신 주소가 정확한지 다시 한번 확인해보시기
+          바랍니다.
+        </div>
+        <a href="/" class="button is-normal main_btn_theme_clr">
+          메인페이지로 이동
+        </a>
+      </div>
     </div>
   </body>
 </html>

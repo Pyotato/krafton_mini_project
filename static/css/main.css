@@ -28,8 +28,8 @@ section.modal_base {
   top: 50%;
   left: 50%;
   background-color: rgba(255, 255, 255, 0.8);
-  transform: translate(-50%,-40%);
- 
+  transform: translate(-50%, -40%);
+
   z-index: 100;
 }
 .flex_wrap {
@@ -50,38 +50,41 @@ section.modal_base {
   background-color: green;
 }
 .modal_base {
+  width: 40%;
+  height: 50%;
+  background-color: #fff7f7;
   width: 50%;
   height: 60%;
   background-color:#fff7f7;
   display: table;
-  
 }
-.main_form{
-  display:table-cell;
+.login_form {
+  display: table-cell;
   vertical-align: middle;
 }
-.text_field{
+.text_field {
   width: 45%;
   height: 5px;
-  background-color: #BB7D3C;
+  background-color: #bb7d3c;
   margin-bottom: 45px;
   border: none;
   border-radius: 5px;
   padding: 15px;
   text-align: center;
-  
 }
-.gps_field{
+.gps_field {
   width: 60%;
   height: 15px;
-  background-color: #BB7D3C;
+  background-color: #bb7d3c;
   margin-bottom: 45px;
   border: none;
   border-radius: 5px;
   padding: 15px;
   text-align: center;
-  
 }
+.submit_btn {
+  font-size: 28px;
+  background-color: #5d3e1e;
 #submit_btn {
   font-size : 28px;
   background-color: #5D3E1E;
@@ -90,34 +93,20 @@ section.modal_base {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  margin-left: 10px;
+  margin-left: 30px;
   width: 300px;
 }
 
-.links{
+.links {
   text-align: right;
-  margin-bottom: -100px; 
+  margin-bottom: -100px;
   margin-right: 40px;
 }
 .links a {
-  font-size : 30px;
-  color : #BB7D3C;
-  
-}
-
-.form{
-  text-align: center;
-  
-}
-
-div > .title{
-  text-align: center;
-  color: #BB7D3C;
-}
-.login_form{
-  color:#BB7D3C;
   font-size: 30px;
-  display:table-cell;
-  vertical-align: middle;
-  transform: translateX(20%);
+  color: #bb7d3c;
+}
+
+.form {
+  text-align: center;
 }

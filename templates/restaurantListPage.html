@@ -7,13 +7,10 @@
     <title>잡솨봐 | 뭐 먹을지 고민될 때</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
     <script
-      src="{{ url_for('static', filename='js/main.js') }}"
+      src="{{ url_for('static', filename='js/js_file.js') }}"
       type="text/javascript"
     />
-    //
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta
       name="viewport"
@@ -88,39 +85,62 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <h1>{{ user_info }}</h1>
               <a href="/register" class="button is-primary">
                 <strong>Sign up</strong>
               </a>
-              <a href="/" class="button is-light"> Log in </a>
+              <a href="/login" class="button is-light"> Log in </a>
             </div>
           </div>
         </div>
       </div>
     </nav>
-    <section class="modal_bg">
-      <img
-        class="modal_img"
-        src="{{ url_for('static', filename='imgs/modal_bg.png') }}"
-      />
-    </section>
-    <section class="modal_base">
-      <div class="login_form">
-        <form class="form">
-
-           <span style="color:#BB7D3C; font-size: 30px;">현재위치 :</span> <input type="text" class="gps_field"></br>
-           <span style="color:#BB7D3C; font-size: 17px;">아이디 </span>    <input type="text" class="text_field"> </br>
-           <span style="color:#BB7D3C; font-size: 17px;">패스워드 </span>   <input type="text" class="text_field"> </br>
-
-          <input type="submit" value="비회원으로 시작하기" class="submit_btn">
-          <input type="submit" value="로그인하기" class="submit_btn">
-        </form>
-        <div class="links">
-          <a href="#"> 회원가입 하러가기 ></a>
+    <!--공통:header 끝-->
+    <section class="card_wrap">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-8">
+          <div class="tile">
+            <div class="tile is-parent is-vertical">
+              <article class="tile is-child notification is-primary">
+                <p class="title">Vertical...</p>
+                <p class="subtitle">Top tile</p>
+              </article>
+              <article class="tile is-child notification is-warning">
+                <p class="title">...tiles</p>
+                <p class="subtitle">Bottom tile</p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification is-info">
+                <p class="title">Middle tile</p>
+                <p class="subtitle">With an image</p>
+                <figure class="image is-4by3">
+                  <img src="https://bulma.io/images/placeholders/640x480.png" />
+                </figure>
+              </article>
+            </div>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-danger">
+              <p class="title">Wide tile</p>
+              <p class="subtitle">Aligned with the right tile</p>
+              <div class="content">
+                <!-- Content -->
+              </div>
+            </article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-danger">
+              <p class="title">Wide tile</p>
+              <p class="subtitle">Aligned with the right tile</p>
+              <div class="content">
+                <!-- Content -->
+              </div>
+            </article>
+          </div>
         </div>
-
       </div>
     </section>
+
     <!--공통:footer-->
     <footer class="footer">
       <div class="content has-text-centered">
@@ -136,5 +156,6 @@
         </p>
       </div>
     </footer>
+    <!--공통:footer 끝-->
   </body>
 </html>
