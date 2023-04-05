@@ -28,6 +28,16 @@ bcrypt = Bcrypt(app)
 def home():
     return render_template('index.html')
 
+@app.route('/token', methods=["POST"])
+def create_token():
+    user_id = request.json.get("user_id", None)
+    password = request.json.get("password", None)
+    if user_id != "test" or password != "test":       # 여기를 어떻게 해야할지?
+        return {"msg": "Wrong email or password"}, 401
+    access_token = create_access_token(identity=user_id)
+    response = {"access_token":access_token}
+    return response
+
 @app.route('/register')
 def register():
     return render_template('register.html')
