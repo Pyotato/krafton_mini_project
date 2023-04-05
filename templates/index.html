@@ -105,21 +105,11 @@
       />
     </section>
     <section class="modal_base">
-      <div class="login_form">
-        <form class="form">
-
-           <span style="color:#BB7D3C; font-size: 30px;">현재위치 :</span> <input type="text" class="gps_field"></br>
-           <span style="color:#BB7D3C; font-size: 17px;">아이디 </span>    <input type="text" class="text_field"> </br>
-           <span style="color:#BB7D3C; font-size: 17px;">패스워드 </span>   <input type="text" class="text_field"> </br>
-
-          <input type="submit" value="비회원으로 시작하기" class="submit_btn">
-          <input type="submit" value="로그인하기" class="submit_btn">
-        </form>
-        <div class="links">
-          <a href="#"> 회원가입 하러가기 ></a>
-        </div>
-
-      </div>
+      <form class="modal_form p-4">
+        <div id="find-me">현재 내 위치 :</div>
+        <input type="text" id="current_location_input" />
+        <div><h1>{{ mylocation }}</h1></div>
+      </form>
     </section>
     <!--공통:footer-->
     <footer class="footer">
