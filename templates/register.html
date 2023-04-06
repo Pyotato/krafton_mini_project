@@ -88,15 +88,23 @@
           <div class="navbar-item">
             <div class="buttons">
               <h1>{{ user_info }}</h1>
+              {% if login_status%}
               <a href="/register" class="button is-primary">
-                <strong>Sign up</strong>
+                <strong>회원가입</strong>
               </a>
-              <a href="/" class="button is-light"> Log in </a>
+              <a href="/" class="button is-light">로그인</a>
+              {% endif %} {% if not login_status%}
+              <button onclick="logout()" class="button is-primary">
+                <strong>로그아웃</strong>
+              </button>
+
+              {% endif %}
             </div>
           </div>
         </div>
       </div>
     </nav>
+    <!--공통:header-->
     <section class="modal_bg">
       <img
         class="modal_img"
@@ -110,7 +118,15 @@
         <a id="map-link" target="blank"></a>
         <div class="flex_item">
           <span>ID</span>
-          <input type="text" id="id_sign_up" placeholder="아이디를 입력하세요" autocomplete="username" /> <button onclick="check_duplicate_user_id()" class="same"> 중복확인</button>
+          <input
+            type="text"
+            id="id_sign_up"
+            placeholder="아이디를 입력하세요"
+            autocomplete="username"
+          />
+          <button onclick="check_duplicate_user_id()" class="same">
+            중복확인
+          </button>
         </div>
         <div>
           <span>PWD</span>
@@ -122,7 +138,9 @@
           />
         </div>
         <div>
-          <button class="sign_up_btn" onclick="register_user()" type="submit">회원가입하기 </button>
+          <button class="sign_up_btn" onclick="register_user()" type="submit">
+            회원가입하기
+          </button>
         </div>
       </form>
     </section>

@@ -132,7 +132,7 @@ section.modal_base {
   text-align: center;
   color: #bb7d3c;
 }
-#submit_btn {
+.submit_btn {
   font-size: 28px;
   background-color: #5d3e1e;
   color: white;

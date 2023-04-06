@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0l ,shrink-to-fit=no"
+      content="width=device-width, initial-scale=1.0 ,shrink-to-fit=no"
     />
     <link
       rel="stylesheet"
@@ -88,10 +88,12 @@
           <div class="navbar-item">
             <div class="buttons">
               <h1>{{ user_info }}</h1>
+              {%if display_signup %}
               <a href="/register" class="button is-primary">
-                <strong>Sign up</strong>
+                <strong>회원 가입</strong>
               </a>
-              <a href="/" class="button is-light"> Log in </a>
+              {% endif %}
+              <a href="/" class="button is-light">{{login_status}}</a>
             </div>
           </div>
         </div>
@@ -107,14 +109,37 @@
     <section class="modal_base">
       <form class="modal_form p-4">
         <h1 class="title is-1">잡솨봐</h1>
-        <span id="find-me">현재 내 위치 :</span> <input type="text" id="current_location_input" /></br>
-        <div><h1>{{ mylocation }}</h1></div>
-        <div style="margin:0 auto ; text-align: center;">
-
-          <input type="button" onclick="window.location.href='/restaurant/list'" value="비회원으로 시작하기"  id="submit_btn">
-          <input type="button" onclick="window.location.href='/login'" value="로그인하기" id="submit_btn">
+        <span id="find-me">현재 내 위치 :</span>
+        <input
+          type="text"
+          id="current_location_input"
+          value="{{location_city}}
+        "
+          placeholder="현재 위치를 입력해주세요."
+        /><br />
+        <!-- <div><h1>{{ mylocation }}</h1></div> -->
+        <div style="margin: 0 auto; text-align: center">
+          <!-- <input
+            type="button"
+            onclick="window.location.href='/restaurant/list'"
+            onclick="window.location.href='/restaurant/list'"
+            value="비회원으로 시작하기"
+            class="submit_btn"
+          /> -->
+          <input
+            type="button"
+            onclick="on_show_restaurant_list()"
+            value="비회원으로 시작하기"
+            class="submit_btn"
+          />
+          <input
+            type="button"
+            onclick="window.location.href='/login'"
+            value="로그인하기"
+            class="submit_btn"
+          />
         </div>
-        </form>
+      </form>
     </section>
     <!--공통:footer-->
     <footer class="footer">

@@ -24,3 +24,4 @@ yarn-error.log*
 
 # python
 .venv
+__pycache__/find_my_location.cpython-311.pyc

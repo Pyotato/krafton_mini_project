@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0l ,shrink-to-fit=no"
+      content="width=device-width, initial-scale=1.0 ,shrink-to-fit=no"
     />
     <link
       rel="stylesheet"
@@ -105,13 +105,18 @@
     </section>
     <section class="modal_base">
       <form>
-        <div id="find-me">Show my location</div>
+        <div id="find-me">로그인</div>
         <br />
         <div><p id="status"></p></div>
         <a id="map-link" target="blank"></a>
         <div class="flex_item">
           <span>ID</span>
-          <input type="text" id="id_input" autocomplete="username" />
+          <input
+            type="text"
+            id="id_input"
+            placeholder="아이디를 입력해주세요"
+            autocomplete="username"
+          />
         </div>
         <div>
           <span>PWD</span>
@@ -121,7 +126,7 @@
             autocomplete="current-password"
           />
         </div>
-        <button type="submit" onclick="submit_login_form()">로그인하기</button>
+        <button type="submit" onclick="on_user_login()">로그인하기</button>
         <a type="button" href="/restaurant/list">비회원으로 시작하기</a>
       </form>
     </section>

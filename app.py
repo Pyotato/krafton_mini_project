@@ -10,6 +10,7 @@ import json
 import hashlib
 from jwt import ExpiredSignatureError,DecodeError
 from find_my_location import geocoding_reverse,geocoding
+import random
 # from localStoragePy import localStoragePy
 import localstorage
 load_dotenv()
@@ -35,7 +36,7 @@ bcrypt = Bcrypt(app)
 data =[]
 records =[]
 total_data=[]
-
+city = ""
 # geopy
 @app.route("/api/location/user", methods=['POST'])
 def locate_user():
@@ -43,23 +44,29 @@ def locate_user():
     mylocation = geocoding_reverse(x_y)
     print(mylocation["address_si"])
     return mylocation
+# 위치 겁색어로 좌표 구하고 좌표를 통해 주소를 가져와서 db컬렉션에 해당 정보 찾아서 랜더링
+@app.route("/api/location/user/find/me", methods=['POST'])
+def locate_user_from_input():
+    location = request.json["curr_location"]
+    mylocation = geocoding(location)
+    loc_str = mylocation["lat"]+","+mylocation["lng"]
+    loc = geocoding_reverse(loc_str)
+    # print(loc)
+    return {"my_location":loc,"my_coord":loc_str}
 
 ##########################################################
 # pages
 @app.route('/')
 def home():
-    # print(mylocation)
-    #  mylocation =localStoragePy.getItem("my_location")
-    # mylocation=localstorage.
-    # print(mylocation)
-    return render_template('index.html') # 아래 코드에 에러 남..
-    # token_receive = request.cookies.get('token')
-    # try:
-    #     payload = jwt.decode(token_receive, my_secret_key, algorithms=['HS256'])
-    #     user_info = db.users.find_one({"username": payload["id"]})
-    #     return render_template('index.html', user_info=user_info)
-    # # except :
-    # #      return redirect(url_for("login"))
+
+    # return render_template('index.html',mylocation=city) # 아래 코드에 에러 남..
+    token_receive = request.cookies.get('token')
+    try:
+        payload = jwt.decode(token_receive, my_secret_key, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        return render_template('index.html', user_info=user_info,display_signup="true")
+    except :
+         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다.",display_signup="true"))
     # except jwt.ExpiredSignatureError:
     #     return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     # except jwt.exceptions.DecodeError:
@@ -69,11 +76,13 @@ def home():
 @app.route('/token', methods=["POST"])
 def create_token():
     user_id = request.json.get("user_id", None)
-    password = request.json.get("password", None)
-    if user_id != "test" or password != "test":       # 여기를 어떻게 해야할지?
+    password = request.json.get("pwd", None)
+    pw_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    if  db.users.find_one({'user_id': user_id, 'password': pw_hash}) is None:
         return {"msg": "Wrong email or password"}, 401
     access_token = create_access_token(identity=user_id)
-    response = {"access_token":access_token}
+    response = {"result":"success","access_token":access_token}
+    
     return response
 
 @app.route('/register')
@@ -90,14 +99,38 @@ def error_page(error):
     return render_template('errorPage.html')
 
 
+@app.route('/restaurant/listcity/<string:location_city>')
+def restaurant_list_page_city(location_city):
+    item_filter =""
+    city_data = []
+    city_item = []
+    print(location_city)
+    for items in metro_category_coll: 
+        if location_city in items or items in location_city :
+            # print(items)
+            city_data.append(items)
+    
+    print(city_data)
+    if len(city_data)==0:
+        item_filter="전체"
+        return redirect(url_for("restaurant_list_page",city_filter=item_filter))
+    else:
+        for i in city_data:
+            item_filter+=" , "+i
+            city_item.extend(list(db[i].find()))
+        print(city_item)
+        return render_template('restaurantListPage.html',data=city_item,city_filter=item_filter)
+    # else:
+    #     return print(city_data)
+        # else : return redirect(url_for("restaurant_list_page"))
+
+
+
 @app.route('/restaurant/list')
 def restaurant_list_page():
-    
-    print("address_si",mylocation.get("address_si"))
     if mylocation.get("address_si") is None:
 
-        for items in metro_category_coll:
-            
+        for items in metro_category_coll: 
             data.extend(list(db[items].find()))
         for i in data:
              if i.get("restaurant_name") is not None:
@@ -108,12 +141,12 @@ def restaurant_list_page():
             if i.get("restaurant_name") is not None:
                 records.append(i)
     try:
-            
+        random.shuffle     
         return redirect(restaurant_detail_page("restaurant_detail_page",location_cat=data.get("location_category"),location_specific=data.get("location_specific"),restaurant_name=data.get("restaurant_name")))
     
     except:
 
-        return render_template('restaurantListPage.html',data=records)
+        return render_template('restaurantListPage.html',data=records,city_filter="전체")
 
 
 
@@ -173,22 +206,23 @@ def refresh_expiring_jwts(response):
         return response
 
 
-@app.route("/api/login", methods=['POST'])
-def login_user():
+# @app.route("/api/login", methods=['POST'])
+# def login_user():
 
-    user_id = request.json["user_id"]
-    pwd = request.json["pwd"]
-    user = users_collection.find_one({'user_id': user_id})
-    if user is None:
-        return jsonify({'result': 'success', 'msg': 'user id does not exist'})
-    pw_hash = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'user_id': user_id, 'password': pw_hash})
-        # return jsonify(msg="login sucess", result="success", access_token=create_access_token(identity=user_id, expires_delta=jwt_access_token_expires))
-    if result is not None:
-        return jsonify(result="success", msg="login success", user_id=user["user_id"],  access_token=create_access_token(identity=user_id))
-        # return jsonify(result="success", access_token=create_access_token(identity=user_id, expires_delta=datetime.timedelta(hours=1)))
-    else:
-        return jsonify({'result': 'fail', 'msg': 'incorrect pwd'})
+#     user_id = request.json["user_id"]
+#     pwd = request.json["pwd"]
+#     user = users_collection.find_one({'user_id': user_id})
+#     if user is None:
+#         return jsonify({'result': 'success', 'msg': 'user id does not exist'})
+#     pw_hash = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
+#     result = db.users.find_one({'user_id': user_id, 'password': pw_hash})
+   
+#         # return jsonify(msg="login sucess", result="success", access_token=create_access_token(identity=user_id, expires_delta=jwt_access_token_expires))
+#     if result is not None:
+#         return jsonify(result="success", msg="login success", user_id=user["user_id"], access_token=create_access_token(identity=user_id, expires_delta=timedelta(hours=1)))
+#         # return jsonify(result="success", access_token=create_access_token(identity=user_id, expires_delta=datetime.timedelta(hours=1)))
+#     else:
+#         return jsonify({'result': 'fail', 'msg': 'incorrect pwd'})
 
 
 @app.route("/api/logout", methods=["POST"])
@@ -196,19 +230,6 @@ def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     return response
-
-#################################################################################
-
-@app.route("/restaurant/list", methods=["GET"])
-def get_restaurant_lists():
-    
-    return ""
-
-
-@app.route("/restaurant/detail", methods=["GET"])
-def get_restaurant_detail():
-
-    return ""
 
 
 
